@@ -8,3 +8,14 @@ wheels/
 
 # Virtual environments
 .venv
+
+.env
+.env.local
+.env*.local
+
+node_modules/
+.next.
+.vercel
+.pytest_cache/
+.ruff_cache/
+
