@@ -293,6 +293,22 @@ def diagnose(
     try:
         report = generate_report(context)
     except Exception as exc:
+        if "429" in str(exec) or "quots" in str(exc).lower():
+            return JSONResponse(
+                content={
+                    "status": "error",
+                    "error": "llm_rate_limited",
+                    "detail": "Generation quots exceeded. Retry shortly."
+                },
+            )
+        return JSONResponse(
+            status_code=502,
+            content={"status": "error", "error": "llm_unavailable", "detail": str(exec),}
+        )
+
+    try:
+        report = generate_report(context)
+    except Exception as exc:
         return JSONResponse(
             status_code=502,
             content={"status": "error", "error": "llm_unavailable",
